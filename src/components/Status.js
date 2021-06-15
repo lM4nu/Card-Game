@@ -1,22 +1,18 @@
-import React, { Component } from 'react';
-
+import React, { Component } from 'react'
 
 class Status extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
-        this.state = {
-
-        }
+        this.state = {}
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <div>
                 <h1>hola </h1>
             </div>
         )
     }
-
 }
 
-export default Status;
+export default Status
