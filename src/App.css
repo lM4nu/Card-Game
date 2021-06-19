@@ -9,13 +9,26 @@
 
 .poke-item {
     border-style: solid;
-    width: 20%;
+    width: 15%;
     margin-bottom: 3%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+.poke-item-clicked {
+    border-style: solid;
+    width: 15%;
+    margin-bottom: 3%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: brown;
+}
 .poke-item:hover {
+    transform: scale(1.25);
+}
+
+.poke-item-clicked:hover {
     transform: scale(1.25);
 }

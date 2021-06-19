@@ -6,9 +6,11 @@ class Game extends Component {
 	  super(props) 
 	  this.state = {
       list : [],
-      usedNumbers : []
+      usedNumbers : [],
+	  clicked : []
     }
             this.getData = this.getData.bind(this);
+            this.clickHandler = this.clickHandler.bind(this);
   }
 
 	async getData(n){
@@ -21,11 +23,9 @@ class Game extends Component {
 			}
 
 			this.state.usedNumbers.push(num);
-		      	console.log(num);
 		      	const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${num}/`);
 		      	const data = await response.json();
-		      	console.log(data);
-	      		this.state.list.push([data.sprites.front_default, data.name]);
+	      		this.state.list.push([data.sprites.front_default, data.name, num]);
 			this.setState((prevState) => ({
 					list : prevState.list
 				}))
@@ -34,36 +34,49 @@ class Game extends Component {
 	}
 
 
-	clear = () => {
-		this.setState({
-			list : []
-		})
-	}
-
-	log = () => { 
-	console.log(this.state)
-	} 
-
+	shuffleArray(arr) {
+		for (let i = arr.length - 1; i > 0; i--) {
+		  const j = Math.floor(Math.random() * (i + 1));
+		  [arr[i], arr[j]] = [arr[j], arr[i]];
+		}
+	  }
+	
 	componentDidMount(){
-		this.getData(5);
+		this.getData(this.props.level*5);
 	}
 
-	test(e) {
-		if(e.target.tagName != "DIV")
-		console.log(e.target.tagName);
+	clickHandler(e) {
+		let el;
+		e.target.tagName !== "DIV" ? el = e.target.parentElement : el = e.target;
+		console.log(el.id);
+		if(!this.state.clicked.includes(el.id)){
+
+			this.state.clicked.push(el.id);
+			this.props.scoreHandler('inc');
+			this.shuffleArray(this.state.list);
+			this.setState(prevState => ({
+				list : prevState.list,
+				clicked : prevState.clicked
+			}))
+
+		}else{
+			this.props.lvlHandler('Reset');
+			this.props.scoreHandler('Reset');
+		}
+
+		if (this.state.clicked.length === this.props.level * 5 ){
+ 			this.props.lvlHandler('Up') ;
+		}
 	}
 
 	render() {
 
         	const pokemons = this.state.list.map((arr) => (
-            		<Item src={arr[0]} name={arr[1]} func={this.test}/>
+            		<Item clicked={this.state.clicked} key={arr[2]} src={arr[0]} name={arr[1]} id={arr[2]} clickHandler={this.clickHandler}/>
 		));
 
 		return (
 			<div>
-			<h1>Game</h1>
-			<button onClick={this.clear}>Clear</button>
-	                <button onClick={this.log}>Log</button>
                 	<br></br>
                 	<div className="poke-container">{pokemons}</div>
             	</div>
