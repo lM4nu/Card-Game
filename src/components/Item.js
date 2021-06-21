@@ -3,16 +3,9 @@ import React, { Component } from 'react'
 class Item extends Component {
     constructor(props) {
         super(props)
-        this.state = {}
-
-	    this.log = this.log.bind(this)
     }
 
 	capitalize = (string) => string[0].toUpperCase() + string.slice(1)
-
-	log(){
-		console.log(this.props.name);
-	}
 
     render() {
         return (
