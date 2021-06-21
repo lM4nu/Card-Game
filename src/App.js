@@ -2,6 +2,7 @@ import './App.css';
 import React, { Component } from 'react';
 import Status from './components/Status';
 import Game from './components/Game';
+
 class App extends Component {
   constructor(){
     super()

@@ -8,7 +8,7 @@ class Status extends Component {
 
     render() {
         return (
-            <div>
+            <div className="status">
                 <h1>Score: {this.props.score} </h1>
                 <h1>Best: {this.props.best} </h1>
             </div>
